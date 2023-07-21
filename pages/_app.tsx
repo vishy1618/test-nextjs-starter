@@ -98,6 +98,7 @@ function parseCookies(request: any) {
 
 MyApp.getInitialProps = async (appContext: NextPageContext) => {
   let eclipseUserId: string;
+  console.log('appContext', appContext);
   if (appContext.req) {
     console.log('has request');
     eclipseUserId = parseCookies(appContext.req).eclipseUser || Math.ceil(Math.random() * 100000).toString();
