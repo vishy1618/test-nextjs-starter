@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { onEntryChange } from '../contentstack-sdk';
-import RenderComponents from '../components/render-components';
-import { getPageRes } from '../helper';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
 import Skeleton from 'react-loading-skeleton';
-import { Props, Context } from "../typescript/pages";
+
+import RenderComponents from '../components/render-components';
+import { onEntryChange } from '../contentstack-sdk';
+import { getPageRes } from '../helper';
+import {
+  Context,
+  Props,
+} from '../typescript/pages';
 
 export default function Home(props: Props) {
 
@@ -38,11 +46,16 @@ export default function Home(props: Props) {
 }
 
 export async function getServerSideProps(context: Context) {
+  const pathname = new URL(`https://example.com${context.resolvedUrl}`).pathname;
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3600'
+  );
   try {
-    const entryRes = await getPageRes(context.resolvedUrl);
+    const entryRes = await getPageRes(pathname);
     return {
       props: {
-        entryUrl: context.resolvedUrl,
+        entryUrl: pathname,
         page: entryRes,
       },
     };

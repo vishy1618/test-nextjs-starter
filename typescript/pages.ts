@@ -1,6 +1,12 @@
-import { Component } from "../typescript/component";
-import { Image } from "../typescript/action";
-import { Entry, HeaderProps ,FooterProps } from "./layout";
+import { ServerResponse } from 'http';
+
+import { Image } from '../typescript/action';
+import { Component } from '../typescript/component';
+import {
+  Entry,
+  FooterProps,
+  HeaderProps,
+} from './layout';
 
 type AdditionalParam = {
   title: string;
@@ -40,7 +46,7 @@ type Author = {
 type PageProps = {
   page: Page;
   posts: [];
-  archivePost: []; 
+  archivePost: [];
   blogPost: BlogPosts;
 }
 
@@ -65,7 +71,7 @@ export type Props = {
   footer: FooterProps;
 }
 
-export type Page ={
+export type Page = {
   page_components: Component[];
   uid: string;
   locale: string;
@@ -79,6 +85,7 @@ export type Context = {
   setHeader: Function;
   write: Function;
   end: Function;
+  res: ServerResponse;
 }
 
 export type Pages = [

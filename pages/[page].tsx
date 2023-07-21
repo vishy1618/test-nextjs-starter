@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { onEntryChange } from '../contentstack-sdk';
-import RenderComponents from '../components/render-components';
-import { getPageRes } from '../helper';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
 import Skeleton from 'react-loading-skeleton';
-import { Props } from "../typescript/pages";
+
+import RenderComponents from '../components/render-components';
+import { onEntryChange } from '../contentstack-sdk';
+import { getPageRes } from '../helper';
+import { Props } from '../typescript/pages';
 
 export default function Page(props: Props) {
   const { page, entryUrl } = props;
@@ -35,17 +40,17 @@ export default function Page(props: Props) {
   );
 }
 
-export async function getServerSideProps({params}: any) {
+export async function getServerSideProps({ params }: any) {
   try {
-      const entryUrl = params.page.includes('/') ? params.page:`/${params.page}`
-      const entryRes = await getPageRes(entryUrl);
-      if (!entryRes) throw new Error('404');
-      return {
-        props: {
-          entryUrl: entryUrl,
-          page: entryRes,
-        },
-      };
+    const entryUrl = params.page.includes('/') ? params.page : `/${params.page}`
+    const entryRes = await getPageRes(entryUrl);
+    if (!entryRes) throw new Error('404');
+    return {
+      props: {
+        entryUrl: entryUrl,
+        page: entryRes,
+      },
+    };
 
   } catch (error) {
     return { notFound: true };
