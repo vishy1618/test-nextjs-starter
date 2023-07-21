@@ -1,14 +1,10 @@
-import React, {
-  useEffect,
-  useState,
-} from 'react';
+import React, { useState } from 'react';
 
 import parse from 'html-react-parser';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 
-import { onEntryChange } from '../contentstack-sdk';
 import { getHeaderRes } from '../helper';
 import {
   Entry,
@@ -55,11 +51,6 @@ export default function Header({ header, entries }: { header: HeaderProps, entri
     }
   }
 
-  useEffect(() => {
-    if (header && entries) {
-      onEntryChange(() => fetchData());
-    }
-  }, [header]);
   const headerData = getHeader ? getHeader : undefined;
 
   return (
@@ -67,7 +58,7 @@ export default function Header({ header, entries }: { header: HeaderProps, entri
       <div className='note-div'>
         {headerData?.notification_bar.show_announcement ? (
           typeof headerData.notification_bar.announcement_text === 'string' && (
-            <div {...headerData.notification_bar.$?.announcement_text as {}}>
+            <div>
               {parse(headerData.notification_bar.announcement_text)}
             </div>
           )

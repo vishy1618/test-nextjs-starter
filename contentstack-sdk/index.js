@@ -27,14 +27,6 @@ if (envConfig.CONTENTSTACK_API_HOST) {
   Stack.setHost(envConfig.CONTENTSTACK_API_HOST);
 }
 
-ContentstackLivePreview.init({
-  stackSdk: Stack,
-  clientUrlParams: {
-    host: envConfig.CONTENTSTACK_APP_HOST,
-  },
-  ssr: false,
-});
-
 export const { onEntryChange } = ContentstackLivePreview;
 
 const renderOption = {

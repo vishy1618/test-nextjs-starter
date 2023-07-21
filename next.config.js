@@ -15,7 +15,7 @@ const config = {
       process.env.CONTENTSTACK_APP_HOST || 'app.contentstack.com',
     NEXT_PUBLIC_CONTENTSTACK_API_KEY: process.env.CONTENTSTACK_API_KEY,
     CONTENTSTACK_LIVE_PREVIEW:
-      process.env.NEXT_PUBLIC_CONTENTSTACK_LIVE_PREVIEW || 'true',
+      process.env.NEXT_PUBLIC_CONTENTSTACK_LIVE_PREVIEW || 'false',
     CONTENTSTACK_LIVE_EDIT_TAGS:
       process.env.CONTENTSTACK_LIVE_EDIT_TAGS || 'false',
   },

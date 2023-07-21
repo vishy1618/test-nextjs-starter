@@ -4,6 +4,10 @@ import '../styles/style.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import '@contentstack/live-preview-utils/dist/main.css';
 
+import {
+  IncomingMessage,
+  ServerResponse,
+} from 'http';
 import { NextPageContext } from 'next';
 import App from 'next/app';
 import Head from 'next/head';
@@ -98,34 +102,26 @@ function parseCookies(request: any) {
 
 MyApp.getInitialProps = async (appContext: NextPageContext) => {
   let eclipseUserId: string;
-  console.log('appContext', appContext);
-  if (appContext.req) {
-    console.log('has request');
-    eclipseUserId = parseCookies(appContext.req).eclipseUser || Math.ceil(Math.random() * 100000).toString();
-
-    (global.window as any) = {
-      localStorage: {
-        getItem: (key: any) => { return eclipseUserId },
-        setItem: (key: any, value: any) => { },
-      },
-      location: {
-        href: appContext.req?.url
-      },
-    };
+  const request = (appContext as any).ctx.req as (IncomingMessage | undefined);
+  const response = (appContext as any).ctx.res as ServerResponse;
+  if (request) {
+    eclipseUserId = parseCookies(request).eclipseUser || Math.ceil(Math.random() * 100000).toString();
 
     if (!Personalization.isInitialized()) {
       await Personalization.init('64ba2881284e3ddc8876ea6f');
+      Personalization.set({
+        userId: eclipseUserId
+      });
     }
 
-    appContext.res?.setHeader('Set-Cookie', `eclipseUser=${eclipseUserId}`);
-  } else {
-    console.log('does not have request');
+    response.setHeader('Set-Cookie', `eclipseUser=${eclipseUserId}`);
   }
-
   const appProps = await App.getInitialProps(appContext as any);
+
   const header = await getHeaderRes();
   const footer = await getFooterRes();
   const entries = await getAllEntries();
+
   return { ...appProps, header, footer, entries };
 };
 
