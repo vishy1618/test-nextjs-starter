@@ -1,8 +1,8 @@
 import * as contentstack from 'contentstack';
-import * as Utils from '@contentstack/utils';
+import getConfig from 'next/config';
 
 import ContentstackLivePreview from '@contentstack/live-preview-utils';
-import getConfig from 'next/config';
+import * as Utils from '@contentstack/utils';
 
 const { publicRuntimeConfig } = getConfig();
 const envConfig = process.env.CONTENTSTACK_API_KEY
@@ -60,12 +60,6 @@ export default {
         .find()
         .then(
           (result) => {
-            jsonRtePath
-              && Utils.jsonToHTML({
-                entry: result,
-                paths: jsonRtePath,
-                renderOption,
-              });
             resolve(result);
           },
           (error) => {

@@ -1,6 +1,9 @@
-import Stack from '../contentstack-sdk';
-import { addEditableTags } from '@contentstack/utils';
 import getConfig from 'next/config';
+
+import Personalization from '@contentstack/personalization-sdk-js';
+import { addEditableTags } from '@contentstack/utils';
+
+import Stack from '../contentstack-sdk';
 
 const { publicRuntimeConfig } = getConfig();
 const envConfig = process.env.CONTENTSTACK_API_KEY
@@ -17,6 +20,14 @@ export const getHeaderRes = async () => {
   });
 
   liveEdit && addEditableTags(response[0][0], 'header', true);
+  if (Personalization.isInitialized()) {
+    response[0][0].notification_bar = Personalization.getActiveVariationFromContainer(response[0][0].personalized_notification_bar);
+  } else {
+    response[0][0].notification_bar = {
+      show_announcement: false,
+      announcement_text: '',
+    }
+  }
   return response[0][0];
 };
 

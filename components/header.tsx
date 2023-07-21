@@ -1,35 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
+
+import parse from 'html-react-parser';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import parse from 'html-react-parser';
-import Tooltip from './tool-tip';
+import Skeleton from 'react-loading-skeleton';
+
 import { onEntryChange } from '../contentstack-sdk';
 import { getHeaderRes } from '../helper';
-import Skeleton from 'react-loading-skeleton';
-import { HeaderProps, Entry, NavLinks } from "../typescript/layout";
+import {
+  Entry,
+  HeaderProps,
+  NavLinks,
+} from '../typescript/layout';
+import Tooltip from './tool-tip';
 
-export default function Header({ header, entries }: {header: HeaderProps, entries: Entry}) {
+export default function Header({ header, entries }: { header: HeaderProps, entries: Entry }) {
 
   const router = useRouter();
   const [getHeader, setHeader] = useState(header);
 
   function buildNavigation(ent: Entry, hd: HeaderProps) {
-    let newHeader={...hd};
-    if (ent.length!== newHeader.navigation_menu.length) {
-          ent.forEach((entry) => {
-            const hFound = newHeader?.navigation_menu.find(
-              (navLink: NavLinks) => navLink.label === entry.title
-            );
-            if (!hFound) {
-              newHeader.navigation_menu?.push({
-                label: entry.title,
-                page_reference: [
-                  { title: entry.title, url: entry.url, $: entry.$ },
-                ],
-                $:{}
-              });
-            }
+    let newHeader = { ...hd };
+    if (ent.length !== newHeader.navigation_menu.length) {
+      ent.forEach((entry) => {
+        const hFound = newHeader?.navigation_menu.find(
+          (navLink: NavLinks) => navLink.label === entry.title
+        );
+        if (!hFound) {
+          newHeader.navigation_menu?.push({
+            label: entry.title,
+            page_reference: [
+              { title: entry.title, url: entry.url, $: entry.$ },
+            ],
+            $: {}
           });
+        }
+      });
     }
     return newHeader
   }
@@ -37,10 +46,10 @@ export default function Header({ header, entries }: {header: HeaderProps, entrie
   async function fetchData() {
     try {
       if (header && entries) {
-      const headerRes = await getHeaderRes();
-      const newHeader = buildNavigation(entries,headerRes)
-      setHeader(newHeader);
-    }
+        const headerRes = await getHeaderRes();
+        const newHeader = buildNavigation(entries, headerRes)
+        setHeader(newHeader);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +61,7 @@ export default function Header({ header, entries }: {header: HeaderProps, entrie
     }
   }, [header]);
   const headerData = getHeader ? getHeader : undefined;
-  
+
   return (
     <header className='header'>
       <div className='note-div'>
@@ -62,9 +71,7 @@ export default function Header({ header, entries }: {header: HeaderProps, entrie
               {parse(headerData.notification_bar.announcement_text)}
             </div>
           )
-        ) : (
-          <Skeleton />
-        )}
+        ) : <></>}
       </div>
       <div className='max-width header-div'>
         <div className='wrapper-logo'>
