@@ -28,5 +28,6 @@ export async function middleware(request: NextRequest) {
   });
   const activeVariation = Personalization.getActiveVariation('64ba333ee26922c8d020006d');
 
-  return NextResponse.rewrite(new URL(`${request.url}?personalize=${activeVariation}`));
+  return NextResponse.next();
+  // return NextResponse.rewrite(new URL(`${request.url}?personalize=${activeVariation}`));
 }
