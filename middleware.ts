@@ -31,6 +31,7 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.rewrite(url);
   if (url.pathname === '/') {
     response.headers.set('CDN-Cache-Control', 'max-age=3600');
+    response.headers.set('Vercel-CDN-Cache-Control', 'max-age=3600');
   }
 
   return response;

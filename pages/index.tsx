@@ -47,6 +47,7 @@ export default function Home(props: Props) {
 
 export async function getServerSideProps(context: Context) {
   const pathname = new URL(`https://example.com${context.resolvedUrl}`).pathname;
+  context.res.setHeader('Cache-Control', 'public, s-maxage=3600');
   try {
     const entryRes = await getPageRes(pathname);
     return {
