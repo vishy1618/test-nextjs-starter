@@ -51,6 +51,10 @@ export async function getServerSideProps(context: Context) {
     'Cache-Control',
     'public, s-maxage=3600'
   );
+  context.res.setHeader(
+    'X-Cache-Control',
+    'public, s-maxage=3600'
+  );
   try {
     const entryRes = await getPageRes(pathname);
     return {
