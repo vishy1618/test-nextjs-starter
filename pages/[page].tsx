@@ -45,11 +45,6 @@ export async function getServerSideProps({ params, res }: any) {
     const entryUrl = params.page.includes('/') ? params.page : `/${params.page}`
     const entryRes = await getPageRes(entryUrl);
     if (!entryRes) throw new Error('404');
-    res.setHeader(
-      'X-Cache-Control',
-      'public, s-maxage=3600'
-    );
-    console.log('I\'ve come to generic getServerSideProps');
     return {
       props: {
         entryUrl: entryUrl,

@@ -52,8 +52,8 @@ export async function getServerSideProps(context: Context) {
     'public, s-maxage=3600'
   );
   context.res.setHeader(
-    'X-Cache-Control',
-    'public, s-maxage=3600'
+    'X-Mas',
+    'crapbag'
   );
   console.log('I\'ve come to index.tsx getServerSideProps');
   try {
