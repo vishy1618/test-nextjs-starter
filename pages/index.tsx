@@ -55,6 +55,7 @@ export async function getServerSideProps(context: Context) {
     'X-Cache-Control',
     'public, s-maxage=3600'
   );
+  console.log('I\'ve come to index.tsx getServerSideProps');
   try {
     const entryRes = await getPageRes(pathname);
     return {
