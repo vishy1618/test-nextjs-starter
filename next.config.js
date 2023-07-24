@@ -26,7 +26,7 @@ const config = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 's-maxage=3600',
+            value: 'public, s-maxage=3600',
           },
         ],
       },
