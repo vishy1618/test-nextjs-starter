@@ -115,19 +115,6 @@ MyApp.getInitialProps = async (appContext: NextPageContext) => {
     }
 
     response.setHeader('Set-Cookie', `eclipseUser=${eclipseUserId}`);
-
-    if (request.url) {
-      console.log('Ive got a request URL');
-      const pathname = new URL(`https://example.com${request.url}`).pathname;
-
-      if (pathname === '/') {
-        response.setHeader(
-          'Cache-Control',
-          'public, s-maxage=3600'
-        );
-        console.log('Im in the root path');
-      }
-    }
   }
   const appProps = await App.getInitialProps(appContext as any);
 
