@@ -19,19 +19,6 @@ const config = {
     CONTENTSTACK_LIVE_EDIT_TAGS:
       process.env.CONTENTSTACK_LIVE_EDIT_TAGS || 'false',
   },
-  async headers() {
-    return [
-      {
-        source: '/',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, s-maxage=3600',
-          },
-        ],
-      },
-    ];
-  },
 };
 module.exports =
   process.env.NODE_ENV === 'development' ? config : withPWA(config);
