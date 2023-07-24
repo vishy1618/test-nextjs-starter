@@ -47,15 +47,6 @@ export default function Home(props: Props) {
 
 export async function getServerSideProps(context: Context) {
   const pathname = new URL(`https://example.com${context.resolvedUrl}`).pathname;
-  context.res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=3600'
-  );
-  context.res.setHeader(
-    'X-Mas',
-    'crapbag'
-  );
-  console.log('I\'ve come to index.tsx getServerSideProps');
   try {
     const entryRes = await getPageRes(pathname);
     return {
